@@ -1,12 +1,33 @@
 import React, { useState } from "react";
 import "./Home.css";
 import  './alltrains'
+import './singleTrain.js'
 function Home() {
   let [trains, dataFun] = useState({
     train: [],
   });
   function allTrains() {
     fetch("http://20.244.56.144:80/train/trains", {
+      method: "GET",
+      headers: {
+        access_token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA3ODQwMzQsImNvbXBhbnlOYW1lIjoiVHJhaW5DZW50cmFsUmFnaGF2IiwiY2xpZW50SUQiOiJiMDM3MzNlMi0xNTY2LTRlNGMtOGQ0My03N2U2ODYwOTc4MjMiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiMjEwMDY0MDEwOTAwNyJ9.oTODiP6vek6ZaL6-er8JkYggTgKWcbwoH-8CuMRmQME",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dataFun({
+          train: response,
+        });
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function getSingleTrain() {
+    fetch(`http://20.244.56.144/train/trains/${trainNumber}`, {
       method: "GET",
       headers: {
         access_token:
