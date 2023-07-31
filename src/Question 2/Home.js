@@ -3,6 +3,7 @@ import "./Home.css";
 import trainData from "./alltrains";
 import "./singleTrain.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 function Home() {
   let [trains, dataFun] = useState({
     train: [],
@@ -39,8 +40,9 @@ function Home() {
     return res;
   }
   
-  function viewDetails(){
-    
+  function viewDetails(event){
+    console.log(event);
+    event.preventDefault();
   }
 
   return (
@@ -53,6 +55,7 @@ function Home() {
               <th>Train Number</th>
               <th>Departure Time</th>
               <th>Seat Availability</th>
+              <th>Prices</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -63,8 +66,9 @@ function Home() {
                 <td>{train.trainNumber}</td>
                 <td>{setTime(train.departureTime)}</td>
                 <td>{setSeat(train.seatsAvailable)}</td>
+                <td>{setSeat(train.price)}</td>
                 <td>
-                  <button type="button" class="btn btn-success" onClick={viewDetails}>
+                  <button type="button" className="btn btn-success" onClick={viewDetails}>
                     Details
                   </button>
                 </td>
