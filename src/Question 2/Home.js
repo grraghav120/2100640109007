@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Home.css";
-import  './alltrains'
+import trainData from './alltrains'
 import './singleTrain.js'
+import 'bootstrap/dist/css/bootstrap.min.css';
 function Home() {
   let [trains, dataFun] = useState({
     train: [],
@@ -25,59 +26,38 @@ function Home() {
         console.log(err);
       });
   }
-
-  function getSingleTrain() {
-    fetch(`http://20.244.56.144/train/trains/${trainNumber}`, {
-      method: "GET",
-      headers: {
-        access_token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA3ODQwMzQsImNvbXBhbnlOYW1lIjoiVHJhaW5DZW50cmFsUmFnaGF2IiwiY2xpZW50SUQiOiJiMDM3MzNlMi0xNTY2LTRlNGMtOGQ0My03N2U2ODYwOTc4MjMiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiMjEwMDY0MDEwOTAwNyJ9.oTODiP6vek6ZaL6-er8JkYggTgKWcbwoH-8CuMRmQME",
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dataFun({
-          train: response,
-        });
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  
+  function setTime(data){
+    return `${data.Hours} : ${data.Minutes} : ${data.Seconds}`;
+    
   }
+
   return (
     <div>
-      <div className="container">
-        <table class="table">
-          <thead>
+      <div className="">
+        <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Train Name</th>
+            <th>Train Number</th>
+            <th>Departure Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {trainData.map((train) => (
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <td>{train.trainNumber}</td>
+              <td>{train.trainName}</td>
+              <td>{setTime(train.departureTime)}</td>
+              <td>
+              <button type="button" class="btn btn-success">Details</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
+          ))}
+        </tbody>
         </table>
-        <button onClick={allTrains}>Click</button>
+        
       </div>
     </div>
   );
