@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Home.css";
-import trainData from './alltrains'
-import './singleTrain.js'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import trainData from "./alltrains";
+import "./singleTrain.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 function Home() {
   let [trains, dataFun] = useState({
     train: [],
@@ -26,38 +26,52 @@ function Home() {
         console.log(err);
       });
   }
-  
-  function setTime(data){
+
+  function setTime(data) {
     return `${data.Hours} : ${data.Minutes} : ${data.Seconds}`;
+  }
+
+  function setSeat(data) {
+    let res = `
+    Sleeper : ${data.sleeper} 
+    AC : ${data.AC}
+    `;
+    return res;
+  }
+  
+  function viewDetails(){
     
   }
 
   return (
     <div>
-      <div className="">
+      <div className="mainApp">
         <table className="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Train Name</th>
-            <th>Train Number</th>
-            <th>Departure Time</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {trainData.map((train) => (
+          <thead className="headings">
             <tr>
-              <td>{train.trainNumber}</td>
-              <td>{train.trainName}</td>
-              <td>{setTime(train.departureTime)}</td>
-              <td>
-              <button type="button" class="btn btn-success">Details</button>
-              </td>
+              <th>Train Name</th>
+              <th>Train Number</th>
+              <th>Departure Time</th>
+              <th>Seat Availability</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
+          <tbody>
+            {trainData.map((train) => (
+              <tr>
+                <td>{train.trainName}</td>
+                <td>{train.trainNumber}</td>
+                <td>{setTime(train.departureTime)}</td>
+                <td>{setSeat(train.seatsAvailable)}</td>
+                <td>
+                  <button type="button" class="btn btn-success" onClick={viewDetails}>
+                    Details
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
-        
       </div>
     </div>
   );
