@@ -1,10 +1,20 @@
-import React from "react";
-// import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import singleTrain from "./singleTrain.js";
 
-// const { id } = useParams();
+function ViewDetails() {
+  const { id } = useParams();
 
-function ViewDetails(){
-    return;
+  return (
+    <div className="container">
+      <h1>Details of Train</h1>
+      <div>
+        <p>{singleTrain.trainName}</p>
+        <p>{singleTrain.trainNumber}</p>
+      </div>
+    </div>
+  );
 }
 
 export default ViewDetails;
